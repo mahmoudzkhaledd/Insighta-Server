@@ -1,0 +1,19 @@
+{
+    "cookieName": "webanalytix",
+    "maxGraphPoint": 30,
+    "maxUserApiKeys": 15,
+    "apiFullAccessKey": "full access",
+    "maxPageItems": 20,
+    "apiKeyAccess": [
+        "analytics",
+        "errors",
+        "actions",
+        "full access"
+    ],
+    "actionsColorTypes": [
+        "noColor",
+        "success",
+        "info",
+        "error"
+    ]
+}
