@@ -8,9 +8,8 @@ const { secureServerRoutesMiddleware } = require('../Middlewares/SecureServerRou
 const { appAxios } = require('../Utils/AppAxios');
 const { getUserSubscription } = require('../Services/Subscription/GetUserSubscription');
 router.get("/test", async (req, res, next) => {
-    const sub = await getUserSubscription('cluzleni2000012mjn6hikp5h')
-
-    res.send(sub);
+ 
+    res.sendStatus(200);
 })
 router.use("/", websiteRouter);
 router.use("/server", secureServerRoutesMiddleware, server2Routes);
