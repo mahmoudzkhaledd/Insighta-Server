@@ -11,31 +11,50 @@ function numOfDate(firstDate, secondDate) {
 }
 
 
-function addView(viewsHistory, increase) {
-    const dateNow = new Date();
-    viewsHistory = viewsHistory || [];
-    if (viewsHistory.length == 0) {
-        for (let i = 0; i < configs.maxGraphPoint; i++) {
-            const obj = {
-                count: 0,
-                date: dateNow.addDays(i - 29).toLocaleDateString()
-            };
-            viewsHistory.push(obj);
+function addView(viewsHistory, increase, maxGraphPoint) {
+    const dateNow = new Date('2024-04-27');
+    const limit = maxGraphPoint ?? Infinity;
+    const defLen = maxGraphPoint ?? configs.maxGraphPoint;
+
+    viewsHistory = viewsHistory ?? [];
+
+    if (viewsHistory.length != defLen) {
+        if (viewsHistory.length == 0) {
+            for (let i = 0; i < defLen; i++) {
+                const obj = {
+                    count: 0,
+                    date: dateNow.addDays(i - defLen + 1).toLocaleDateString()
+                };
+                viewsHistory.push(obj);
+            }
+        } else if (viewsHistory.length <= defLen) {
+            const loop = defLen - viewsHistory.length;
+            const firstDate = viewsHistory[0].date;
+            for (let i = 1; i <= loop; i++) {
+                const obj = {
+                    count: 0,
+                    date: firstDate.addDays(-1 * i).toLocaleDateString()
+                };
+                viewsHistory = [obj].concat(viewsHistory);
+            }
+        } else {
+            viewsHistory.splice(0, viewsHistory.length - defLen);
         }
-        viewsHistory[viewsHistory.length - 1].count += increase;
+        if (viewsHistory.length != 0) viewsHistory[viewsHistory.length - 1].count += increase;
     } else if (dateNow.toLocaleDateString() == viewsHistory[viewsHistory.length - 1].date) {
         viewsHistory[viewsHistory.length - 1].count += increase;
-    } else if (numOfDate(dateNow, viewsHistory[viewsHistory.length - 1].date) <= 30) {
+    } else {
         const diff = numOfDate(dateNow, viewsHistory[viewsHistory.length - 1].date);
+
         for (let i = 1; i <= diff; i++) {
             const obj = {
                 count: 0,
                 date: dateNow.addDays(i - diff).toLocaleDateString()
             };
             viewsHistory.push(obj);
+            if (viewsHistory.length > limit) viewsHistory.splice(0, 1);
         }
         viewsHistory[viewsHistory.length - 1].count += increase;
-        viewsHistory.splice(0, diff);
     }
     return viewsHistory;
 }
@@ -76,7 +95,7 @@ function getDeviceName(userAgent) {
     }
     return browserName;
 }
-function increaseMap(map,key) { 
+function increaseMap(map, key) {
     const count = map.get(key);
     if (count == null) map.set(key, 1);
     else map.set(key, count + 1);

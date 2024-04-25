@@ -13,7 +13,7 @@ axios.interceptors.request.use(req => {
     const nodePublicKey = process.env.NEXT_PUBLIC_KEY ?? "";
     const hashed = crypto.publicEncrypt(nodePublicKey, Buffer.from(key)).toString('base64');
 
-    req.headers.set("api-secret", hashed);
+    req.headers.set("api-secret", key);
     return req;
 })
 module.exports.appAxios = axios;

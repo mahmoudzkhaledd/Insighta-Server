@@ -42,7 +42,6 @@ exports.deleteActionSchema = asyncHandeler(async (req, res, next) => {
         await session.commitTransaction();
         res.sendStatus(200);
     } catch (error) {
-        console.log(error);
         await session.abortTransaction();
         res.status(400).json({ msg: error.message });
     } finally {

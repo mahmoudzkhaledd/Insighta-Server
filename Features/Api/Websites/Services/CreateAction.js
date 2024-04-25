@@ -73,7 +73,6 @@ exports.createAction = asyncHandeler(async (req, res, next) => {
 
         res.status(200).json({ action });
     } catch (error) {
-        console.log(error);
         await session.abortTransaction();
         res.status(400).json({ msg: error.message });
     } finally {
