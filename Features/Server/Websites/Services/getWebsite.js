@@ -19,7 +19,7 @@ exports.getWebsite = asyncHandeler(async (req, res, next) => {
         return res.status(404).json({ msg: "Can't find the website" });
     }
     const sub = await getUserSubscription(website.userId);
-   console.log(sub);
+
     if (withGraph == true) {
         website.visitorsHistory = addView(website.visitorsHistory ?? [], 0, sub?.package?.maxGraphPoints);
         website.visitsHistory = addView(website.visitsHistory ?? [], 0, sub?.package?.maxGraphPoints);

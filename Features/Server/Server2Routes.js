@@ -5,7 +5,6 @@ const router = require('express').Router();
 // let count = 0;
 // router.use((req, res, next) => {
 //     count++;
-//     console.log(`request ${count}`);
 //     next();
 // })
 
