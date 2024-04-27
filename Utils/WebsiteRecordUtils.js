@@ -12,13 +12,13 @@ function numOfDate(firstDate, secondDate) {
 
 
 function addView(viewsHistory, increase, maxGraphPoint) {
-    const dateNow = new Date('2024-04-27');
+    const dateNow = new Date();
     const limit = maxGraphPoint ?? Infinity;
     const defLen = maxGraphPoint ?? configs.maxGraphPoint;
 
     viewsHistory = viewsHistory ?? [];
-
-    if (viewsHistory.length != defLen) {
+     if (viewsHistory.length != defLen) {
+       
         if (viewsHistory.length == 0) {
             for (let i = 0; i < defLen; i++) {
                 const obj = {
@@ -41,7 +41,8 @@ function addView(viewsHistory, increase, maxGraphPoint) {
             viewsHistory.splice(0, viewsHistory.length - defLen);
         }
         if (viewsHistory.length != 0) viewsHistory[viewsHistory.length - 1].count += increase;
-    } else if (dateNow.toLocaleDateString() == viewsHistory[viewsHistory.length - 1].date) {
+    } else if (`${dateNow.toLocaleDateString()}`.split('T')[0] == `${viewsHistory[viewsHistory.length - 1].date.toLocaleDateString()}`.split('T')[0]) {
+ 
         viewsHistory[viewsHistory.length - 1].count += increase;
     } else {
         const diff = numOfDate(dateNow, viewsHistory[viewsHistory.length - 1].date);
