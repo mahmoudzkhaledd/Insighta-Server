@@ -24,7 +24,8 @@ const validateUserApiKey = async (req, res, next) => {
     if (keyIdx == -1) {
         return res.status(404).json({ msg: "Not authorized", });
     }
-
+    userApiKey.keys[keyIdx].totalUses ++;
+    userApiKey.save();
     res.locals.apiKeyModel = {
         key: userApiKey.keys[keyIdx],
         userId: userApiKey.userId,
